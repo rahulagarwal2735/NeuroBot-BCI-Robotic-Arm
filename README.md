@@ -1,5 +1,5 @@
 # 🧠 NeuroBot — Mind-Controlled Robotic Arm
-
+Youtube Link - https://youtu.be/TXFSgJyz0Ko
 ### PRISM GenAI Hackathon 2026
 
 **NeuroBot** is an assistive Brain-Computer Interface (BCI) prototype that converts biosignal events into physical robotic-arm movements using **EEG, EMG, Python, LSL and Arduino**.
