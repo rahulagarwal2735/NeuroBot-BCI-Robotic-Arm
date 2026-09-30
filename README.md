@@ -1,151 +1,357 @@
-# 🧠 NeuroBot — Mind-Controlled Robotic Arm
-Youtube Link - https://youtu.be/TXFSgJyz0Ko
+# NeuroBot
+## Mind-Controlled Assistive Robotic Arm using EEG & EMG
+
 ### PRISM GenAI Hackathon 2026
 
-**NeuroBot** is an assistive Brain-Computer Interface (BCI) prototype that converts biosignal events into physical robotic-arm movements using **EEG, EMG, Python, LSL and Arduino**.
+ **Prototype Demo:** [Watch on YouTube](https://youtu.be/TXFSgJyz0Ko)
 
-> **From biological intent to real-world movement.**
+**NeuroBot** is a Brain-Computer Interface (BCI) based assistive robotic-arm prototype that transforms detected biosignal events into physical robotic movements using **EEG, EMG, Python, Lab Streaming Layer (LSL), serial communication, and Arduino**.
 
----
-
-## 🎯 Problem Statement
-
-People with severe motor impairments may find conventional interfaces such as joysticks, keyboards, switches and touch controls difficult or impossible to operate.
-
-Existing EEG-based robotic systems can also face challenges such as noisy signals, false triggers, user fatigue and inconsistent control.
-
-NeuroBot explores a more intuitive biosignal-driven interface for assistive robotic control.
+> ### Think. Detect. Move.
+> **From biological intent to real-world robotic action.**
 
 ---
 
-## 💡 Our Solution
+#  Problem Statement
 
-NeuroBot combines **EEG-based brain-signal acquisition** with an **EEG + EMG hybrid architecture** to create a real-time human-machine interaction system.
+People with severe motor impairments may have limited ability to interact with conventional control systems such as joysticks, keyboards, switches, and touch interfaces.
+
+Brain-Computer Interfaces provide an alternative pathway for human-machine interaction, but practical EEG-based control systems face several challenges:
+
+- EEG signals are weak and susceptible to noise and artifacts.
+- False detections can result in unintended commands.
+- Signal characteristics vary between users and sessions.
+- Continuous interaction may contribute to user fatigue.
+- Reliable real-time communication between biosignal processing and physical hardware is required.
+- Depending on a single biosignal can limit robustness.
+
+**NeuroBot explores a low-cost, modular and assistive biosignal-driven approach to robotic control.**
+
+---
+
+#  Our Solution
+
+NeuroBot creates an end-to-end pathway between **human biosignals and robotic movement**.
+
+The prototype acquires EEG signals, streams them into Python through **Lab Streaming Layer (LSL)**, detects configured signal events, generates robotic commands, and communicates those commands to an Arduino.
+
+The Arduino then converts the received commands into physical robotic-arm movements.
 
 ```text
-EEG / EMG Biosignals
-        ↓
-Signal Acquisition
-        ↓
-Real-Time Processing
-        ↓
-Event Detection
-        ↓
-Python BCI Controller
-        ↓
-Movement Command
-        ↓
-Serial Communication
-        ↓
+┌─────────────────────────────┐
+│        HUMAN USER           │
+│         EEG + EMG           │
+└─────────────┬───────────────┘
+              │
+              ▼
+      SIGNAL ACQUISITION
+              │
+              ▼
+        LSL STREAMING
+              │
+              ▼
+     REAL-TIME PROCESSING
+              │
+              ▼
+       EVENT DETECTION
+              │
+              ▼
+     PYTHON BCI CONTROLLER
+              │
+              ▼
+       MOVEMENT COMMAND
+              │
+              ▼
+    USB SERIAL COMMUNICATION
+              │
+              ▼
+       ARDUINO CONTROLLER
+              │
+              ▼
+         MOTOR CONTROL
+              │
+              ▼
+        🤖 ROBOTIC ARM
+```
+
+The broader NeuroBot architecture incorporates **EMG as a complementary biosignal modality**, providing a foundation for hybrid EEG-EMG interaction and future confirmation/safety mechanisms.
+
+---
+
+# What Makes NeuroBot Different?
+
+### Biosignal-Based Interaction
+Explores interaction without relying entirely on conventional physical controllers.
+
+### Real-Time Processing
+EEG samples are continuously streamed and processed through Python.
+
+###  Hybrid Architecture
+EEG provides the primary BCI pathway while EMG provides a complementary modality for future multimodal control.
+
+###  End-to-End Integration
+Connects signal acquisition, software processing, serial communication and physical actuation in one pipeline.
+
+###  Trigger Protection
+A cooldown mechanism helps prevent repeated immediate activations from the same detected event.
+
+###  Modular Design
+Signal acquisition, testing, processing and hardware control are separated, making the prototype easier to test and extend.
+
+---
+
+#  Robotic Arm Commands
+
+NeuroBot currently supports four basic robotic actions:
+
+| Serial Command | Action |
+|:---:|---|
+| `O` |  Open Claw |
+| `C` |  Close Claw |
+| `U` | ⬆ Move Arm Up |
+| `D` | ⬇ Move Arm Down |
+
+The Python BCI controller generates these commands and sends them to the Arduino through serial communication.
+
+---
+
+# How NeuroBot Works
+
+The working prototype follows this real-time pipeline:
+
+```text
+LIVE EEG
+   │
+   ▼
+LSL STREAM
+   │
+   ▼
+PYTHON
+   │
+   ▼
+SIGNAL CHANGE ANALYSIS
+   │
+   ▼
+EVENT DETECTION
+   │
+   ▼
+COMMAND GENERATION
+   │
+   ▼
+O / C / U / D
+   │
+   ▼
+USB SERIAL
+   │
+   ▼
+ARDUINO
+   │
+   ▼
+MOTOR CONTROL
+   │
+   ▼
+ROBOTIC MOVEMENT
+```
+
+The current prototype monitors incoming EEG samples and detects signal events using an experimental threshold-based mechanism.
+
+When the configured event condition is satisfied, the controller advances through the robotic command sequence and sends the corresponding command to the Arduino.
+
+---
+
+#  Impact & Applications
+
+NeuroBot demonstrates how biosignals can provide an alternative pathway for interacting with machines.
+
+### Potential Applications
+
+- Assistive technology
+- Assistive robotic systems
+-  Brain-Computer Interface research
+- Rehabilitation research
+-  Hands-free machine interaction
+- Biosignal-controlled systems
+- Human-robot interaction
+- Neurotechnology experimentation
+
+The long-term objective is to explore more accessible interfaces that can reduce dependence on conventional physical controllers.
+
+---
+
+# Prototype Demonstration
+
+The prototype demonstration shows the complete journey:
+
+```text
+Biosignal
+   ↓
+EEG Acquisition
+   ↓
+Live Signal Stream
+   ↓
+Python Detection
+   ↓
+Arduino Command
+   ↓
+Physical Movement
+```
+
+### 🎬 Demo Video
+
+▶️ **[Watch NeuroBot Prototype Demonstration](https://youtu.be/TXFSgJyz0Ko)**
+
+The demonstration includes the real-time signal-processing and robotic-control workflow used by the prototype.
+
+---
+
+# 📁 Repository Structure
+
+```text
+Mind-Controlled-Robotic-Arm/
+│
+├── eeg_control.py
+│   └── Main EEG event detection and robotic-arm controller
+│
+├── test_eeg.py
+│   └── Tests LSL connectivity and incoming EEG samples
+│
+├── two_motor_function.ino
+│   └── Arduino firmware for motor and robotic-arm control
+│
+├── requirements.txt
+│   └── Required Python packages
+│
+├── LangAI3.0_AI_Disclosure.docx
+│   └── Official GenAI usage disclosure
+│
+├── SRM_WalkinDeadlines_Submission.pdf
+│   └── Final hackathon presentation
+│
+├── README.md
+│   └── Project documentation and reproducible setup guide
+│
+└── .gitignore
+    └── Excludes virtual environments and temporary files
+```
+
+---
+
+#  Technology Stack
+
+### Software
+
+| Technology | Purpose |
+|---|---|
+| **Python** | Real-time BCI processing and control |
+| **Lab Streaming Layer (LSL)** | Real-time EEG data streaming |
+| **pylsl** | Python interface for receiving LSL streams |
+| **PySerial** | Python-to-Arduino serial communication |
+| **Arduino IDE** | Firmware development and upload |
+| **Visual Studio Code** | Python development and testing |
+| **Git & GitHub** | Version control and project submission |
+
+### Hardware
+
+- EEG acquisition device
+- EEG electrodes
+- EMG sensor
+- Arduino
+- Motor driver / motor-control circuitry
+- Robotic-arm structure
+- Motors / actuators
+- USB serial connection
+- External motor power supply
+
+---
+
+#  Arduino Firmware
+
+The Arduino firmware is available in:
+
+```text
+two_motor_function.ino
+```
+
+The Arduino forms the **physical control layer** of NeuroBot.
+
+Python sends single-character commands:
+
+```text
+'O' → Open
+'C' → Close
+'U' → Up
+'D' → Down
+```
+
+The Arduino receives the serial command and executes the corresponding motor-control operation.
+
+```text
+Python
+   │
+   │  O / C / U / D
+   ▼
+USB Serial
+   │
+   ▼
 Arduino
-        ↓
+   │
+   ▼
+Motor Control
+   │
+   ▼
 Robotic Arm
 ```
 
-The EEG signal is streamed to Python using **Lab Streaming Layer (LSL)**. Python continuously monitors the incoming signal and, when the configured event is detected, sends a movement command to the Arduino.
+### Uploading the Firmware
+
+1. Connect the Arduino through USB.
+2. Open `two_motor_function.ino` in Arduino IDE.
+3. Select the correct Arduino board.
+4. Select the appropriate COM port.
+5. Verify/compile the sketch.
+6. Upload the firmware.
+7. Close Arduino Serial Monitor before running the Python controller.
+
+> The Serial Monitor should be closed while running `eeg_control.py` because both applications cannot normally use the same serial port simultaneously.
 
 ---
 
-## ⚡ Key Features
-
-- 🧠 Real-time EEG event detection
-- 💪 Hybrid EEG + EMG architecture
-- 🔄 Continuous biosignal monitoring
-- 🌐 LSL-based EEG streaming
-- ⚙️ Python-based signal processing
-- 🔌 Python-to-Arduino serial communication
-- 🤖 Physical robotic-arm actuation
-- 🛡️ Cooldown mechanism to reduce repeated triggers
-- 🧩 Modular and expandable architecture
-
-### Robotic Commands
-
-| Command | Action |
-|---|---|
-| `O` | Open Claw |
-| `C` | Close Claw |
-| `U` | Arm Up |
-| `D` | Arm Down |
-
----
-
-## 🌍 Impact
-
-NeuroBot demonstrates how biosignals can provide an alternative interaction pathway for people with limited motor control.
-
-Potential applications include:
-
-- Assistive robotics
-- Accessibility technology
-- Rehabilitation research
-- Hands-free device interaction
-- Human-machine interfaces
-- Brain-Computer Interface research
-
----
-
-## 🧪 Demonstration
-
-The prototype demonstrates the complete real-time pipeline:
-
-```text
-Live EEG
-   ↓
-LSL Stream
-   ↓
-Python Event Detection
-   ↓
-Movement Command
-   ↓
-Arduino
-   ↓
-Robotic Arm Response
-```
-
-### EEG Test
-
-`test_eeg.py` checks whether EEG data is successfully reaching Python through LSL.
-
-```bash
-python test_eeg.py
-```
-
-### Complete System
-
-`eeg_control.py` runs the complete EEG-to-robotic-arm control pipeline.
-
-```bash
-python eeg_control.py
-```
-
----
-
-# 🚀 Installation & How to Run
+#  Installation & Setup
 
 ## 1. Clone the Repository
 
 ```bash
-git clone <YOUR-GITHUB-REPOSITORY-URL>
+git clone https://github.com/rahulagarwal2735/Mind-Controlled-Robotic-Arm.git
 cd Mind-Controlled-Robotic-Arm
 ```
 
-## 2. Create a Virtual Environment
+---
+
+## 2. Create a Python Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it on Windows:
+### Windows Command Prompt
 
 ```bash
 .venv\Scripts\activate
 ```
 
-The terminal should now show:
+### Windows PowerShell
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+After activation, the terminal should show:
 
 ```text
 (.venv)
 ```
+
+---
 
 ## 3. Install Dependencies
 
@@ -153,43 +359,43 @@ The terminal should now show:
 pip install -r requirements.txt
 ```
 
-Required Python packages:
+Main Python dependencies:
 
 ```text
 pylsl
 pyserial
 ```
 
-## 4. Prepare EEG
+---
 
-1. Turn on the EEG headset.
-2. Connect it to the EEG acquisition software.
-3. Verify sensor/electrode contact.
+# 🧠 EEG & LSL Setup
+
+Before running NeuroBot:
+
+1. Connect and power on the EEG acquisition device.
+2. Open the compatible EEG acquisition software.
+3. Verify the EEG electrodes and incoming signals.
 4. Start EEG acquisition.
-5. Start the EEG LSL stream.
-6. Ensure the LSL stream type is `EEG`.
+5. Enable/start the LSL stream.
+6. Ensure an LSL stream with type `EEG` is available.
 
-## 5. Prepare Arduino
+The expected path is:
 
-1. Connect the Arduino.
-2. Open `arduino/robotic_arm.ino`.
-3. Upload the program using Arduino IDE.
-4. Check the Arduino COM port.
-5. Close Arduino Serial Monitor before running Python.
-
-If required, update the serial port in `eeg_control.py`:
-
-```python
-SERIAL_PORT = "COM7"
+```text
+EEG Headset
+     ↓
+Acquisition Software
+     ↓
+LSL Stream
+     ↓
+Python
 ```
-
-Replace `COM7` with the actual port assigned to the Arduino.
 
 ---
 
-# ✅ Code Verification & Testing
+#  Code Verification
 
-Before running the complete hardware prototype, the software can be checked step-by-step.
+The project can be tested step-by-step before running the complete hardware pipeline.
 
 ## Step 1 — Check Python
 
@@ -197,9 +403,7 @@ Before running the complete hardware prototype, the software can be checked step
 python --version
 ```
 
-A Python version should be displayed.
-
-Then verify pip:
+Then:
 
 ```bash
 pip --version
@@ -207,29 +411,7 @@ pip --version
 
 ---
 
-## Step 2 — Activate the Virtual Environment
-
-On Windows:
-
-```bash
-.venv\Scripts\Activate.ps1
-```
-
-The terminal should display:
-
-```text
-(.venv)
-```
-
----
-
-## Step 3 — Install / Verify Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-To verify the required libraries:
+## Step 2 — Verify Dependencies
 
 ```bash
 python -c "import pylsl; import serial; print('All Python libraries working')"
@@ -241,66 +423,44 @@ Expected output:
 All Python libraries working
 ```
 
-If `pylsl` is missing:
-
-```bash
-pip install pylsl
-```
-
-If PySerial is missing:
-
-```bash
-pip install pyserial
-```
 
 ---
 
-## Step 4 — Check `test_eeg.py` for Syntax Errors
+## Step 3 — Verify Python Syntax
 
-Run:
+Check the EEG testing program:
 
 ```bash
 python -m py_compile test_eeg.py
 ```
 
-If the command returns to the terminal without displaying an error, the file has passed Python syntax checking.
-
-Example:
-
-```text
-(.venv) > python -m py_compile test_eeg.py
-(.venv) >
-```
-
-✅ `test_eeg.py` syntax is valid.
-
----
-
-## Step 5 — Check `eeg_control.py` for Syntax Errors
-
-Run:
+Check the main BCI controller:
 
 ```bash
 python -m py_compile eeg_control.py
 ```
 
-Again, no output means Python found no syntax errors.
-
-✅ `eeg_control.py` syntax is valid.
+If the terminal returns without an error, Python found no syntax errors.
 
 ---
 
-## Step 6 — Test EEG Connection
+#  Test EEG Connectivity
 
-Start the EEG device and LSL streaming software first.
+Before starting robotic control, verify that Python can receive EEG samples.
 
-Then run:
+Run:
 
 ```bash
 python test_eeg.py
 ```
 
-Expected successful output:
+The script searches for an LSL stream with:
+
+```text
+type = EEG
+```
+
+Example successful output:
 
 ```text
 NEUROBOT - EEG CONNECTION TEST
@@ -319,69 +479,65 @@ Receiving 10 EEG samples...
 Sample 1: [...]
 Sample 2: [...]
 Sample 3: [...]
-...
 ```
 
-This confirms:
+This verifies:
 
 ```text
-EEG Device
-    ↓
-EEG Software
-    ↓
-LSL
-    ↓
-Python
-    ↓
-EEG Samples
+EEG DEVICE → LSL → PYTHON  ✅
 ```
 
-✅ EEG-to-Python communication is working.
 
-### If You Get `No EEG Stream Found`
+# Configure Arduino Serial Port
 
-This does **not automatically mean the Python code is broken**.
+Check the Arduino port in:
 
-Check:
-
-- EEG device is powered on.
-- EEG acquisition software is running.
-- Headset is connected.
-- LSL streaming has started.
-- The published stream type is `EEG`.
-
-Then run:
-
-```bash
-python test_eeg.py
+```text
+Windows Device Manager
+        ↓
+Ports (COM & LPT)
 ```
 
-again.
+For example:
+
+```text
+Arduino (COM7)
+```
+
+Set the corresponding port in `eeg_control.py`.
+
+Example:
+
+```python
+SERIAL_PORT = "COM7"
+```
+
+If the Arduino appears as `COM5`, change it accordingly.
 
 ---
 
-## Step 7 — Run the Complete Controller
+# ▶️ Run the Complete NeuroBot System
 
-After confirming EEG samples and connecting the Arduino:
+After:
+
+- EEG hardware is connected
+- EEG acquisition is running
+- LSL streaming is active
+- Arduino firmware is uploaded
+- Robotic arm is powered
+- Correct serial port is configured
+
+run:
 
 ```bash
 python eeg_control.py
 ```
 
-The program should:
-
-1. Find the EEG stream.
-2. Connect to the Arduino.
-3. Continuously read EEG samples.
-4. Calculate signal changes.
-5. Detect configured EEG events.
-6. Generate a movement command.
-7. Send the command through serial communication.
-8. Trigger robotic-arm movement.
-
 Example terminal output:
 
 ```text
+Looking for EEG stream...
+
 Connected to EEG stream
 Arduino connected
 System Ready
@@ -393,99 +549,127 @@ EEG EVENT DETECTED
 Sending command: O
 ```
 
----
-
-## Step 8 — Verify Complete Pipeline
-
-The final integration should follow:
+The complete execution is:
 
 ```text
-EEG Headset
-     ↓
-EEG Acquisition Software
-     ↓
+EEG
+ ↓
 LSL
-     ↓
-test_eeg.py
-     ↓
-EEG Verified
-     ↓
-eeg_control.py
-     ↓
+ ↓
+Python
+ ↓
 Event Detection
-     ↓
-O / C / U / D Command
-     ↓
-Serial Communication
-     ↓
+ ↓
+Movement Command
+ ↓
+Serial
+ ↓
 Arduino
-     ↓
-Motor Driver
-     ↓
-Robotic Arm Movement
+ ↓
+Motor
+ ↓
+Robotic Arm
 ```
 
-### Recommended Testing Order
+---
+
+# 🧪 Recommended Testing Sequence
 
 ```text
-1. Check Python
+01  Install Python
         ↓
-2. Install dependencies
+02  Create Virtual Environment
         ↓
-3. Compile-check test_eeg.py
+03  Install requirements.txt
         ↓
-4. Compile-check eeg_control.py
+04  Verify Python Files
         ↓
-5. Test Python imports
+05  Start EEG Acquisition
         ↓
-6. Start EEG + LSL
+06  Start LSL Stream
         ↓
-7. Run test_eeg.py
+07  Run test_eeg.py
         ↓
-8. Confirm EEG samples
+08  Verify EEG Samples
         ↓
-9. Connect Arduino
+09  Upload Arduino Firmware
         ↓
-10. Run eeg_control.py
+10  Connect Robotic Arm
         ↓
-11. Verify robotic-arm movement
+11  Run eeg_control.py
+        ↓
+12  Verify Physical Movement
 ```
 
 ---
 
-## 🛠️ Technology Stack
+#  Control & Safety Logic
 
-**Software:** Python • pylsl • Lab Streaming Layer • PySerial • Arduino IDE • VS Code
+The current EEG controller includes:
 
-**Hardware:** EEG Device • EMG Sensor • Arduino • Motor Driver • Robotic Arm • DC Motors
+### Event Threshold
+
+A configurable threshold is used to identify significant changes in the incoming signal.
+
+### Cooldown
+
+After an event is detected, a short cooldown prevents immediate repeated triggering.
+
+### Serial Command Layer
+
+Only predefined commands are transmitted to the Arduino:
+
+```text
+O / C / U / D
+```
+
+This keeps the software-to-hardware interface simple and predictable.
 
 ---
 
-## 🔮 Future Scope
+#  Future Scope
+
+###  Advanced BCI
 
 - Multi-channel EEG processing
-- EEG + EMG sensor fusion
-- Adaptive signal thresholds
-- Machine-learning based intent classification
-- Personalized user calibration
-- Additional robotic-arm movements
-- Force and position feedback
-- Enhanced false-trigger prevention
+- Signal filtering and artifact reduction
+- Adaptive thresholds
+- Automatic user calibration
+
+###  AI-Based Intent Recognition
+
+- EEG feature extraction
+- Machine-learning classifiers
+- Independent multi-command classification
+- Personalized user models
+- Confidence-based command generation
+
+### Hybrid EEG + EMG
+
+- EMG-based command confirmation
+- EEG-EMG sensor fusion
+- False-trigger reduction
+- Multimodal control
+
+###  Advanced Robotics
+
+- Additional degrees of freedom
+- Position feedback
+- Force sensing
+- Collision detection
+- Emergency-stop mechanisms
+- Closed-loop robotic control
 
 ---
 
-## ⚠️ Prototype Note
+#  Conclusion
 
-NeuroBot is currently a **hackathon/research prototype** and not a certified medical device.
+**NeuroBot connects biological signals with physical robotic action.**
 
-The current implementation uses EEG event detection to trigger robotic commands. Future versions can extend the system toward multi-command intent classification and deeper EEG-EMG fusion.
+By integrating **EEG/EMG sensing, real-time LSL streaming, Python-based event detection, serial communication, Arduino and robotic actuation**, the prototype demonstrates an end-to-end pathway from biosignal acquisition to real-world movement.
 
----
+The current prototype establishes the foundation for future intelligent, personalized and multimodal assistive robotic systems.
 
-## 🏁 Conclusion
-
-NeuroBot demonstrates a complete connection between **human biosignals and physical robotic action**.
-
-By combining **EEG/EMG sensing, real-time Python processing, LSL streaming and Arduino-based robotic control**, NeuroBot explores how assistive systems can move beyond conventional physical controllers.
-
-### **Think. Detect. Move. — NeuroBot**
+> ## 🧠 THINK → ⚡ DETECT → 🤖 MOVE
+>
+> **NeuroBot — Bridging Human Intent and Robotic Action**
